@@ -7,7 +7,6 @@ async function seedDatabase() {
     try {
 
         console.log("Starting database seed...");
-
         
         await session.run(`
             MATCH (n)
@@ -16,8 +15,6 @@ async function seedDatabase() {
 
         console.log("Existing data cleared.");
 
-
-        
 
         await session.run(`
             CREATE
@@ -44,9 +41,7 @@ async function seedDatabase() {
         `);
 
         console.log("Developers created.");
-
-
-        
+    
 
         await session.run(`
             CREATE
@@ -176,6 +171,11 @@ async function seedDatabase() {
                 id: "company3",
                 name: "InnovateLabs",
                 industry: "Technology"
+            }),
+            (c3:Company {
+                id: "company4",
+                name: "WexaAI",
+                industry: "Technology"
             })
         `);
 
@@ -217,8 +217,6 @@ async function seedDatabase() {
 
         console.log("Jobs created.");
 
-
-        
 
         await session.run(`
             MATCH
