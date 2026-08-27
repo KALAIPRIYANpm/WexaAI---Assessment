@@ -31,7 +31,7 @@ function App() {
                         element={<Dashboard />}
                     />
 
-                    <Route
+                         <Route
                         path="/developers"
                         element={<Developers />}
                     />
@@ -61,4 +61,4 @@ function App() {
 }
 
 
-export default App;//app.jsx
+export default App;

@@ -1,7 +1,6 @@
 const graphService = require("../Services/graphService");
 
 
-// GET /api/developers
 async function getAllDevelopers(req, res) {
 
     try {
@@ -26,7 +25,6 @@ async function getAllDevelopers(req, res) {
 }
 
 
-// GET /api/developers/:id
 async function getDeveloperById(req, res) {
 
     try {
@@ -61,7 +59,6 @@ async function getDeveloperById(req, res) {
 }
 
 
-// POST /api/developers
 async function createDeveloper(req, res) {
 
     try {
@@ -100,7 +97,7 @@ async function createDeveloper(req, res) {
 }
 
 
-// GET /api/developers/:id/skills
+
 async function getDeveloperSkills(req, res) {
 
     try {

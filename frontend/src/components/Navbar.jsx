@@ -50,7 +50,7 @@ function Navbar() {
 
             <Toolbar sx={{ py: 1, gap: 2 }}>
 
-                {/* Logo mark: three connected nodes */}
+                
 
                 <Box
                     component={Link}

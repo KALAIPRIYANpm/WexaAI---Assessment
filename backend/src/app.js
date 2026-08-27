@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
 });
 
 
-// Test CognoDB
+
 app.get("/api/test-db", async (req, res) => {
 
     const session = driver.session();
@@ -87,7 +87,7 @@ app.get("/api/test-db", async (req, res) => {
 });
 
 
-// API routes
+
 app.use("/api/developers", developerRoutes);
 
 app.use("/api/jobs", jobRoutes);
@@ -97,7 +97,6 @@ app.use("/api/graph", graphRoutes);
 app.use("/api/skills", skillRoutes);
 
 
-// Start server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
@@ -202,7 +201,7 @@ app.get("/api/developers/:id", async (req, res) => {
 });
 
 
-// Get developer skills
+
 app.get("/api/developers/:id/skills", async (req, res) => {
 
     const session = driver.session();

@@ -88,7 +88,7 @@ function Dashboard() {
 
         <Container sx={{ mt: 6, mb: 6 }}>
 
-            {/* Hero */}
+            
 
             <Box sx={{ mb: 5 }}>
 
@@ -113,7 +113,7 @@ function Dashboard() {
             </Box>
 
 
-            {/* Statistics */}
+            
 
             <Grid container spacing={3} sx={{ mb: 6 }}>
 
@@ -132,7 +132,7 @@ function Dashboard() {
             </Grid>
 
 
-            {/* Developers */}
+            
 
             <Typography variant="h5" sx={{ mb: 3 }}>
                 Developers

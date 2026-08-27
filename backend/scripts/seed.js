@@ -8,7 +8,7 @@ async function seedDatabase() {
 
         console.log("Starting database seed...");
 
-        // Clear existing database
+        
         await session.run(`
             MATCH (n)
             DETACH DELETE n
@@ -17,9 +17,7 @@ async function seedDatabase() {
         console.log("Existing data cleared.");
 
 
-        // --------------------------------------------------
-        // DEVELOPERS
-        // --------------------------------------------------
+        
 
         await session.run(`
             CREATE
@@ -48,9 +46,7 @@ async function seedDatabase() {
         console.log("Developers created.");
 
 
-        // --------------------------------------------------
-        // SKILLS
-        // --------------------------------------------------
+        
 
         await session.run(`
             CREATE
@@ -106,9 +102,7 @@ async function seedDatabase() {
         console.log("Skills created.");
 
 
-        // --------------------------------------------------
-        // TECHNOLOGIES
-        // --------------------------------------------------
+       
 
         await session.run(`
             CREATE
@@ -136,9 +130,7 @@ async function seedDatabase() {
         console.log("Technologies created.");
 
 
-        // --------------------------------------------------
-        // PROJECTS
-        // --------------------------------------------------
+       
 
         await session.run(`
             CREATE
@@ -164,9 +156,7 @@ async function seedDatabase() {
         console.log("Projects created.");
 
 
-        // --------------------------------------------------
-        // COMPANIES
-        // --------------------------------------------------
+       
 
         await session.run(`
             CREATE
@@ -192,9 +182,7 @@ async function seedDatabase() {
         console.log("Companies created.");
 
 
-        // --------------------------------------------------
-        // JOBS
-        // --------------------------------------------------
+       
 
         await session.run(`
             CREATE
@@ -230,9 +218,7 @@ async function seedDatabase() {
         console.log("Jobs created.");
 
 
-        // --------------------------------------------------
-        // DEVELOPER → SKILL
-        // --------------------------------------------------
+        
 
         await session.run(`
             MATCH
@@ -267,9 +253,7 @@ async function seedDatabase() {
         console.log("Developer skills connected.");
 
 
-        // --------------------------------------------------
-        // SKILL → RELATED SKILL
-        // --------------------------------------------------
+    
 
         await session.run(`
             MATCH
@@ -299,9 +283,7 @@ async function seedDatabase() {
         console.log("Related skills connected.");
 
 
-        // --------------------------------------------------
-        // PROJECT → TECHNOLOGY
-        // --------------------------------------------------
+       
 
         await session.run(`
             MATCH
@@ -331,9 +313,7 @@ async function seedDatabase() {
         console.log("Project technologies connected.");
 
 
-        // --------------------------------------------------
-        // DEVELOPER → PROJECT
-        // --------------------------------------------------
+      
 
         await session.run(`
             MATCH
@@ -358,9 +338,7 @@ async function seedDatabase() {
         console.log("Developer projects connected.");
 
 
-        // --------------------------------------------------
-        // JOB → REQUIRED SKILLS
-        // --------------------------------------------------
+       
 
         await session.run(`
             MATCH
@@ -398,9 +376,7 @@ async function seedDatabase() {
         console.log("Job requirements connected.");
 
 
-        // --------------------------------------------------
-        // COMPANY → JOB
-        // --------------------------------------------------
+        
 
         await session.run(`
             MATCH

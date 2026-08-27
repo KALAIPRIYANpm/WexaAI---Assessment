@@ -115,7 +115,7 @@ function DeveloperDetails() {
 
         <Container sx={{ mt: 6, mb: 6 }}>
 
-            {/* Developer information */}
+            
 
             <Box
                 sx={{
@@ -167,7 +167,7 @@ function DeveloperDetails() {
             <Divider sx={{ my: 5, borderColor: "rgba(91,95,239,0.15)" }} />
 
 
-            {/* Skills */}
+            
 
             <Typography variant="h5">
                 Skills
@@ -185,7 +185,7 @@ function DeveloperDetails() {
             <Divider sx={{ my: 5, borderColor: "rgba(91,95,239,0.15)" }} />
 
 
-            {/* Recommendations */}
+            
 
             <Typography variant="h5">
                 Recommended Jobs

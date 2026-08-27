@@ -3,11 +3,7 @@ const { randomUUID } = require("node:crypto");
 const driver = require("../db/neo4j");
 
 
-// ---------------------------------------
-// Helper: convert Neo4j Integer objects
-// ({low, high}) into plain JS numbers,
-// recursively, anywhere in an object/array
-// ---------------------------------------
+
 function toNativeTypes(value) {
 
     if (neo4j.isInt(value)) {
@@ -91,11 +87,7 @@ async function getDeveloperById(developerId) {
 }
 
 
-// ---------------------------------------
-// Create a new developer, optionally
-// attaching HAS_SKILL relationships to
-// existing Skill nodes by name
-// ---------------------------------------
+
 async function createDeveloper({ name, email, experience, skills }) {
 
     const session = driver.session();
@@ -199,10 +191,7 @@ async function getDeveloperSkills(developerId) {
 }
 
 
-// ---------------------------------------
-// Get all skills (for populating the
-// "Add Developer" form's skill picker)
-// ---------------------------------------
+
 async function getAllSkills() {
 
     const session = driver.session();

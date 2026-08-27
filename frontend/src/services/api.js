@@ -5,9 +5,7 @@ const API = axios.create({
 });
 
 
-// ---------------------------------------
-// Developers
-// ---------------------------------------
+
 
 export const getDevelopers = () => {
     return API.get("/developers");
@@ -29,18 +27,13 @@ export const getDeveloperSkills = (id) => {
 };
 
 
-// ---------------------------------------
-// Skills
-// ---------------------------------------
+
 
 export const getSkills = () => {
     return API.get("/skills");
 };
 
 
-// ---------------------------------------
-// Jobs
-// ---------------------------------------
 
 export const getJobs = () => {
     return API.get("/jobs");
@@ -52,9 +45,6 @@ export const getJob = (id) => {
 };
 
 
-// ---------------------------------------
-// Recommendations
-// ---------------------------------------
 
 export const getRecommendations = (developerId) => {
     return API.get(
@@ -63,9 +53,6 @@ export const getRecommendations = (developerId) => {
 };
 
 
-// ---------------------------------------
-// Graph
-// ---------------------------------------
 
 export const getDeveloperGraph = (developerId) => {
     return API.get(
@@ -74,4 +61,4 @@ export const getDeveloperGraph = (developerId) => {
 };
 
 
-export default API; //api.js
+export default API; 
