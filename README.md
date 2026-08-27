@@ -1,7 +1,7 @@
 Live Demo
 
 Live Application:
-https://wexa-ai-assessment-one.vercel.app/
+https://wexa-ai-assessment3.vercel.app/
 
 📌 Project Overview
 
