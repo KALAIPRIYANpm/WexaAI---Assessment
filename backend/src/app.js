@@ -8,20 +8,16 @@ const driver = require("./db/neo4j");
 const developerRoutes = require("./routes/developerRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const graphRoutes = require("./routes/graphRoutes");
+const skillRoutes = require("./routes/skillRoutes");
 
 const app = express();
 
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
 
-// ---------------------------------------
-// Helper: convert Neo4j Integer objects
-// ({low, high}) into plain JS numbers,
-// recursively, anywhere in an object/array
-// ---------------------------------------
+
 function toNativeTypes(value) {
 
     if (neo4j.isInt(value)) {
@@ -98,6 +94,8 @@ app.use("/api/jobs", jobRoutes);
 
 app.use("/api/graph", graphRoutes);
 
+app.use("/api/skills", skillRoutes);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
@@ -153,7 +151,6 @@ app.get("/api/developers", async (req, res) => {
 });
 
 
-// Get a developer by ID
 app.get("/api/developers/:id", async (req, res) => {
 
     const session = driver.session();
@@ -269,7 +266,6 @@ app.get("/api/developers/:id/skills", async (req, res) => {
 });
 
 
-// Get recommended jobs for a developer
 app.get("/api/jobs/recommendations/:developerId", async (req, res) => {
 
     const session = driver.session();

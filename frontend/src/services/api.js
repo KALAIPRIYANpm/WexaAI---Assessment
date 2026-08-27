@@ -19,8 +19,22 @@ export const getDeveloper = (id) => {
 };
 
 
+export const createDeveloper = (data) => {
+    return API.post("/developers", data);
+};
+
+
 export const getDeveloperSkills = (id) => {
     return API.get(`/developers/${id}/skills`);
+};
+
+
+// ---------------------------------------
+// Skills
+// ---------------------------------------
+
+export const getSkills = () => {
+    return API.get("/skills");
 };
 
 
@@ -60,4 +74,4 @@ export const getDeveloperGraph = (developerId) => {
 };
 
 
-export default API;
+export default API; //api.js

@@ -1,7 +1,6 @@
 const graphService = require("../Services/graphService");
 
 
-// GET /api/jobs
 async function getAllJobs(req, res) {
 
     try {
@@ -26,7 +25,6 @@ async function getAllJobs(req, res) {
 }
 
 
-// GET /api/jobs/:id
 async function getJobById(req, res) {
 
     try {
@@ -61,7 +59,6 @@ async function getJobById(req, res) {
 }
 
 
-// GET /api/jobs/recommendations/:developerId
 async function getJobRecommendations(req, res) {
 
     try {

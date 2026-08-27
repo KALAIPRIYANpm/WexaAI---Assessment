@@ -1,4 +1,5 @@
 const neo4j = require("neo4j-driver");
+const { randomUUID } = require("node:crypto");
 const driver = require("../db/neo4j");
 
 
@@ -90,6 +91,70 @@ async function getDeveloperById(developerId) {
 }
 
 
+// ---------------------------------------
+// Create a new developer, optionally
+// attaching HAS_SKILL relationships to
+// existing Skill nodes by name
+// ---------------------------------------
+async function createDeveloper({ name, email, experience, skills }) {
+
+    const session = driver.session();
+
+    try {
+
+        const id = randomUUID();
+
+        await session.run(
+            `
+            CREATE (d:Developer {
+                id: $id,
+                name: $name,
+                email: $email,
+                experience: $experience
+            })
+            `,
+            {
+                id: id,
+                name: name,
+                email: email,
+                experience: neo4j.int(experience)
+            }
+        );
+
+        if (skills && skills.length > 0) {
+
+            await session.run(
+                `
+                MATCH (d:Developer {id: $id})
+                UNWIND $skills AS skillName
+                MATCH (s:Skill {name: skillName})
+                MERGE (d)-[:HAS_SKILL]->(s)
+                `,
+                {
+                    id: id,
+                    skills: skills
+                }
+            );
+
+        }
+
+        const result = await session.run(
+            `MATCH (d:Developer {id: $id}) RETURN d`,
+            { id: id }
+        );
+
+        return toNativeTypes(
+            result.records[0].get("d").properties
+        );
+
+    } finally {
+
+        await session.close();
+
+    }
+}
+
+
 // Get developer skills
 async function getDeveloperSkills(developerId) {
 
@@ -124,6 +189,34 @@ async function getDeveloperSkills(developerId) {
             skills: record.get("skills").map(skill => {
                 return skill.properties;
             })
+        });
+
+    } finally {
+
+        await session.close();
+
+    }
+}
+
+
+// ---------------------------------------
+// Get all skills (for populating the
+// "Add Developer" form's skill picker)
+// ---------------------------------------
+async function getAllSkills() {
+
+    const session = driver.session();
+
+    try {
+
+        const result = await session.run(`
+            MATCH (s:Skill)
+            RETURN s
+            ORDER BY s.name
+        `);
+
+        return result.records.map(record => {
+            return toNativeTypes(record.get("s").properties);
         });
 
     } finally {
@@ -378,7 +471,9 @@ async function getDeveloperGraph(developerId) {
 module.exports = {
     getAllDevelopers,
     getDeveloperById,
+    createDeveloper,
     getDeveloperSkills,
+    getAllSkills,
     getJobRecommendations,
     getAllJobs,
     getJobById,

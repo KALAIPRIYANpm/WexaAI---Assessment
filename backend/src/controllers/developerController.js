@@ -61,6 +61,45 @@ async function getDeveloperById(req, res) {
 }
 
 
+// POST /api/developers
+async function createDeveloper(req, res) {
+
+    try {
+
+        const { name, email, experience, skills } = req.body;
+
+        if (!name || !email || experience === undefined || experience === "") {
+
+            return res.status(400).json({
+                success: false,
+                message: "name, email and experience are required"
+            });
+        }
+
+        const developer = await graphService.createDeveloper({
+            name: name,
+            email: email,
+            experience: Number(experience),
+            skills: Array.isArray(skills) ? skills : []
+        });
+
+        res.status(201).json({
+            success: true,
+            developer: developer
+        });
+
+    } catch (error) {
+
+        console.error("Error creating developer:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to create developer"
+        });
+    }
+}
+
+
 // GET /api/developers/:id/skills
 async function getDeveloperSkills(req, res) {
 
@@ -100,5 +139,6 @@ async function getDeveloperSkills(req, res) {
 module.exports = {
     getAllDevelopers,
     getDeveloperById,
+    createDeveloper,
     getDeveloperSkills
-};
+}; //developercontroller

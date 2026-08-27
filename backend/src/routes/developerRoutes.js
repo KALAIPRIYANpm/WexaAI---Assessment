@@ -3,6 +3,7 @@ const express = require("express");
 const {
     getAllDevelopers,
     getDeveloperById,
+    createDeveloper,
     getDeveloperSkills
 } = require("../controllers/developerController");
 
@@ -13,6 +14,10 @@ const router = express.Router();
 router.get("/", getAllDevelopers);
 
 
+// POST /api/developers
+router.post("/", createDeveloper);
+
+
 // GET /api/developers/:id/skills
 router.get("/:id/skills", getDeveloperSkills);
 
@@ -21,4 +26,4 @@ router.get("/:id/skills", getDeveloperSkills);
 router.get("/:id", getDeveloperById);
 
 
-module.exports = router;
+module.exports = router;  //developerRoutes

@@ -3,13 +3,16 @@ import {
     Typography,
     Grid,
     CircularProgress,
-    Box
+    Box,
+    Button
 } from "@mui/material";
 
 import {
     useEffect,
     useState
 } from "react";
+
+import { Link } from "react-router-dom";
 
 import {
     getDevelopers
@@ -20,11 +23,8 @@ import DeveloperCard from "../components/DeveloperCard";
 
 function Developers() {
 
-    const [developers, setDevelopers] =
-        useState([]);
-
-    const [loading, setLoading] =
-        useState(true);
+    const [developers, setDevelopers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -33,8 +33,7 @@ function Developers() {
 
             try {
 
-                const response =
-                    await getDevelopers();
+                const response = await getDevelopers();
 
                 setDevelopers(
                     response.data.developers
@@ -58,55 +57,50 @@ function Developers() {
 
 
     return (
-        <Container sx={{ mt: 5 }}>
 
-            <Typography
-                variant="h3"
-                fontWeight="bold"
-                sx={{ mb: 4 }}
+        <Container sx={{ mt: 6, mb: 6 }}>
+
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb: 4
+                }}
             >
-                Developers
-            </Typography>
+
+                <Typography variant="h3">
+                    Developers
+                </Typography>
+
+                <Button
+                    variant="contained"
+                    component={Link}
+                    to="/developers/add"
+                >
+                    Add Developer
+                </Button>
+
+            </Box>
+
 
             {loading ? (
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "center"
-                    }}
-                >
-
-                    <CircularProgress />
-
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
+                    <CircularProgress sx={{ color: "#5B5FEF" }} />
                 </Box>
 
             ) : (
 
-                <Grid
-                    container
-                    spacing={3}
-                >
+                <Grid container spacing={3}>
 
-                    {developers.map(
-                        developer => (
+                    {developers.map(developer => (
 
-                            <Grid
-                                key={developer.id}
-                                size={{
-                                    xs: 12,
-                                    sm: 6,
-                                    md: 4
-                                }}>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={developer.id}>
+                            <DeveloperCard developer={developer} />
+                        </Grid>
 
-                                <DeveloperCard
-                                    developer={developer}
-                                />
-
-                            </Grid>
-
-                        )
-                    )}
+                    ))}
 
                 </Grid>
 

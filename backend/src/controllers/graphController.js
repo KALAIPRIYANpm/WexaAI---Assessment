@@ -1,7 +1,7 @@
 const graphService = require("../Services/graphService");
 
 
-// GET /api/graph/:developerId
+
 async function getDeveloperGraph(req, res) {
 
     try {

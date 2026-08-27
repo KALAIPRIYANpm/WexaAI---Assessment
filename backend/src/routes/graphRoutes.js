@@ -7,7 +7,6 @@ const {
 const router = express.Router();
 
 
-// GET /api/graph/:developerId
 router.get("/:developerId", getDeveloperGraph);
 
 
