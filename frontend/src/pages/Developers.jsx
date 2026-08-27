@@ -58,7 +58,6 @@ function Developers() {
 
 
     return (
-
         <Container sx={{ mt: 5 }}>
 
             <Typography
@@ -68,7 +67,6 @@ function Developers() {
             >
                 Developers
             </Typography>
-
 
             {loading ? (
 
@@ -94,12 +92,12 @@ function Developers() {
                         developer => (
 
                             <Grid
-                                item
-                                xs={12}
-                                sm={6}
-                                md={4}
                                 key={developer.id}
-                            >
+                                size={{
+                                    xs: 12,
+                                    sm: 6,
+                                    md: 4
+                                }}>
 
                                 <DeveloperCard
                                     developer={developer}

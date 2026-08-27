@@ -18,11 +18,8 @@ import JobCard from "../components/JobCard";
 
 function Jobs() {
 
-    const [jobs, setJobs] =
-        useState([]);
-
-    const [loading, setLoading] =
-        useState(true);
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -31,8 +28,7 @@ function Jobs() {
 
             try {
 
-                const response =
-                    await getJobs();
+                const response = await getJobs();
 
                 setJobs(
                     response.data.jobs
@@ -57,55 +53,27 @@ function Jobs() {
 
     return (
 
-        <Container
-            sx={{
-                mt: 5,
-                mb: 5
-            }}
-        >
+        <Container sx={{ mt: 6, mb: 6 }}>
 
-            <Typography
-                variant="h3"
-                fontWeight="bold"
-                sx={{ mb: 4 }}
-            >
+            <Typography variant="h3" sx={{ mb: 4 }}>
                 Jobs
             </Typography>
 
 
             {loading ? (
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "center"
-                    }}
-                >
-
-                    <CircularProgress />
-
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
+                    <CircularProgress sx={{ color: "#5B5FEF" }} />
                 </Box>
 
             ) : (
 
-                <Grid
-                    container
-                    spacing={3}
-                >
+                <Grid container spacing={3}>
 
                     {jobs.map(job => (
 
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            key={job.id}
-                        >
-
-                            <JobCard
-                                job={job}
-                            />
-
+                        <Grid size={{ xs: 12, md: 6 }} key={job.id}>
+                            <JobCard job={job} />
                         </Grid>
 
                     ))}

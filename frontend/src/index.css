@@ -1,13 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
 * {
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f5f7fa;
+html, body, #root {
+    min-height: 100%;
 }
 
-a {
-    text-decoration: none;
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1B1F3B;
+
+    background:
+        radial-gradient(ellipse 900px 600px at 8% -10%, rgba(91,95,239,0.20), transparent 60%),
+        radial-gradient(ellipse 800px 700px at 100% 10%, rgba(20,184,166,0.18), transparent 55%),
+        radial-gradient(ellipse 900px 800px at 50% 110%, rgba(139,143,245,0.16), transparent 55%),
+        linear-gradient(135deg, #F3F5FF 0%, #EDE9FE 45%, #E0F2FE 100%);
+
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+::selection {
+    background: rgba(91,95,239,0.25);
+}
+
+/* visible keyboard focus, kept subtle */
+:focus-visible {
+    outline: 2px solid #5B5FEF;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
 }

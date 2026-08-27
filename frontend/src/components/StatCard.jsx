@@ -1,7 +1,8 @@
 import {
     Card,
     CardContent,
-    Typography
+    Typography,
+    Box
 } from "@mui/material";
 
 
@@ -9,29 +10,33 @@ function StatCard({ title, value }) {
 
     return (
 
-        <Card
-            elevation={2}
-            sx={{
-                borderRadius: 3
-            }}
-        >
+        <Card sx={{ height: "100%" }}>
 
-            <CardContent>
+            <CardContent sx={{ py: 3 }}>
 
                 <Typography
+                    variant="subtitle2"
                     color="text.secondary"
                 >
                     {title}
                 </Typography>
 
+                <Box sx={{ mt: 1 }}>
 
-                <Typography
-                    variant="h3"
-                    fontWeight="bold"
-                    sx={{ mt: 1 }}
-                >
-                    {value}
-                </Typography>
+                    <Typography
+                        className="mono"
+                        variant="h3"
+                        sx={{
+                            fontWeight: 700,
+                            background: "linear-gradient(90deg, #5B5FEF, #14B8A6)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent"
+                        }}
+                    >
+                        {value}
+                    </Typography>
+
+                </Box>
 
             </CardContent>
 

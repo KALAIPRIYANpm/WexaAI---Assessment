@@ -28,19 +28,11 @@ function DeveloperDetails() {
 
     const { id } = useParams();
 
+    const [developer, setDeveloper] = useState(null);
+    const [skills, setSkills] = useState([]);
+    const [recommendations, setRecommendations] = useState([]);
 
-    const [developer, setDeveloper] =
-        useState(null);
-
-    const [skills, setSkills] =
-        useState([]);
-
-    const [recommendations, setRecommendations] =
-        useState([]);
-
-
-    const [loading, setLoading] =
-        useState(true);
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -56,9 +48,7 @@ function DeveloperDetails() {
                 ] = await Promise.all([
 
                     getDeveloper(id),
-
                     getDeveloperSkills(id),
-
                     getRecommendations(id)
 
                 ]);
@@ -103,16 +93,8 @@ function DeveloperDetails() {
 
         return (
 
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    mt: 10
-                }}
-            >
-
-                <CircularProgress />
-
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
+                <CircularProgress sx={{ color: "#5B5FEF" }} />
             </Box>
         );
     }
@@ -123,11 +105,7 @@ function DeveloperDetails() {
         return (
 
             <Container sx={{ mt: 5 }}>
-
-                <Typography>
-                    Developer not found.
-                </Typography>
-
+                <Typography>Developer not found.</Typography>
             </Container>
         );
     }
@@ -135,102 +113,94 @@ function DeveloperDetails() {
 
     return (
 
-        <Container
-            sx={{
-                mt: 5,
-                mb: 5
-            }}
-        >
+        <Container sx={{ mt: 6, mb: 6 }}>
 
             {/* Developer information */}
 
-            <Typography
-                variant="h3"
-                fontWeight="bold"
+            <Box
+                sx={{
+                    p: 4,
+                    borderRadius: 5,
+                    background: "rgba(255,255,255,0.6)",
+                    backdropFilter: "blur(20px)",
+                    border: "1px solid rgba(255,255,255,0.9)",
+                    boxShadow: "0 8px 32px rgba(91,95,239,0.12)"
+                }}
             >
-                {developer.name}
-            </Typography>
+
+                <Box
+                    sx={{
+                        width: 72,
+                        height: 72,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "linear-gradient(135deg, #5B5FEF, #14B8A6)",
+                        color: "#fff",
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontWeight: 700,
+                        fontSize: "1.5rem",
+                        mb: 2
+                    }}
+                >
+                    {developer.name
+                        ? developer.name.split(" ").map(p => p[0]).slice(0, 2).join("").toUpperCase()
+                        : "?"}
+                </Box>
+
+                <Typography variant="h3">
+                    {developer.name}
+                </Typography>
+
+                <Typography color="text.secondary" sx={{ mt: 0.5 }}>
+                    {developer.email}
+                </Typography>
+
+                <Typography className="mono" sx={{ mt: 1 }} color="#4144C4" fontWeight={600}>
+                    {developer.experience} years experience
+                </Typography>
+
+            </Box>
 
 
-            <Typography
-                color="text.secondary"
-                sx={{ mt: 1 }}
-            >
-                {developer.email}
-            </Typography>
-
-
-            <Typography sx={{ mt: 1 }}>
-                Experience: {developer.experience} years
-            </Typography>
-
-
-            <Divider sx={{ my: 4 }} />
+            <Divider sx={{ my: 5, borderColor: "rgba(91,95,239,0.15)" }} />
 
 
             {/* Skills */}
 
-            <Typography
-                variant="h4"
-                fontWeight="bold"
-            >
+            <Typography variant="h5">
                 Skills
             </Typography>
-
 
             <Box sx={{ mt: 2 }}>
 
                 {skills.map(skill => (
-
-                    <SkillChip
-                        key={skill.id}
-                        skill={skill}
-                    />
-
+                    <SkillChip key={skill.id} skill={skill} />
                 ))}
 
             </Box>
 
 
-            <Divider sx={{ my: 5 }} />
+            <Divider sx={{ my: 5, borderColor: "rgba(91,95,239,0.15)" }} />
 
 
             {/* Recommendations */}
 
-            <Typography
-                variant="h4"
-                fontWeight="bold"
-            >
+            <Typography variant="h5">
                 Recommended Jobs
             </Typography>
 
-
-            <Typography
-                color="text.secondary"
-                sx={{ mt: 1, mb: 3 }}
-            >
+            <Typography color="text.secondary" sx={{ mt: 1, mb: 3 }}>
                 Jobs matched using your skill graph.
             </Typography>
 
-
-            <Grid
-                container
-                spacing={3}
-            >
+            <Grid container spacing={3}>
 
                 {recommendations.map(job => (
 
-                    <Grid
-                        item
-                        xs={12}
-                        md={6}
-                        key={job.jobId}
-                    >
-
-                        <JobCard
-                            job={job}
-                        />
-
+                    <Grid size={{ xs: 12, md: 6 }} key={job.jobId}>
+                        <JobCard job={job} />
                     </Grid>
 
                 ))}

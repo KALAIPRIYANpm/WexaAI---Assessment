@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const neo4j = require("neo4j-driver");
 require("dotenv").config();
 
 const driver = require("./db/neo4j");
@@ -14,6 +15,36 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+
+// ---------------------------------------
+// Helper: convert Neo4j Integer objects
+// ({low, high}) into plain JS numbers,
+// recursively, anywhere in an object/array
+// ---------------------------------------
+function toNativeTypes(value) {
+
+    if (neo4j.isInt(value)) {
+        return value.toNumber();
+    }
+
+    if (Array.isArray(value)) {
+        return value.map(toNativeTypes);
+    }
+
+    if (value !== null && typeof value === "object") {
+
+        const result = {};
+
+        for (const key in value) {
+            result[key] = toNativeTypes(value[key]);
+        }
+
+        return result;
+    }
+
+    return value;
+}
 
 
 // Home
@@ -79,6 +110,7 @@ app.listen(PORT, () => {
 
 });
 
+
 // Get all developers
 app.get("/api/developers", async (req, res) => {
 
@@ -98,11 +130,11 @@ app.get("/api/developers", async (req, res) => {
             return developer;
         });
 
-        res.json({
+        res.json(toNativeTypes({
             success: true,
             count: developers.length,
             developers: developers
-        });
+        }));
 
     } catch (error) {
 
@@ -119,6 +151,7 @@ app.get("/api/developers", async (req, res) => {
 
     }
 });
+
 
 // Get a developer by ID
 app.get("/api/developers/:id", async (req, res) => {
@@ -150,10 +183,10 @@ app.get("/api/developers/:id", async (req, res) => {
 
         const developer = result.records[0].get("d").properties;
 
-        res.json({
+        res.json(toNativeTypes({
             success: true,
             developer: developer
-        });
+        }));
 
     } catch (error) {
 
@@ -170,6 +203,7 @@ app.get("/api/developers/:id", async (req, res) => {
 
     }
 });
+
 
 // Get developer skills
 app.get("/api/developers/:id/skills", async (req, res) => {
@@ -212,11 +246,11 @@ app.get("/api/developers/:id/skills", async (req, res) => {
             return skill.properties;
         });
 
-        res.json({
+        res.json(toNativeTypes({
             success: true,
             developer: developer,
             skills: skills
-        });
+        }));
 
     } catch (error) {
 
@@ -233,6 +267,7 @@ app.get("/api/developers/:id/skills", async (req, res) => {
 
     }
 });
+
 
 // Get recommended jobs for a developer
 app.get("/api/jobs/recommendations/:developerId", async (req, res) => {
@@ -269,18 +304,18 @@ app.get("/api/jobs/recommendations/:developerId", async (req, res) => {
                 collect(DISTINCT requiredSkill.name) AS requiredSkills
 
             RETURN
-    job.id AS jobId,
-    job.title AS title,
-    job.location AS location,
-    job.experience AS experience,
-    company.name AS company,
-    matchingSkills,
-    requiredSkills,
-    [skill IN requiredSkills WHERE NOT skill IN matchingSkills] AS missingSkills,
-    round(
-        100.0 * size(matchingSkills) / size(requiredSkills)
-    ) AS matchPercentage
-ORDER BY matchPercentage DESC
+                job.id AS jobId,
+                job.title AS title,
+                job.location AS location,
+                job.experience AS experience,
+                company.name AS company,
+                matchingSkills,
+                requiredSkills,
+                [skill IN requiredSkills WHERE NOT skill IN matchingSkills] AS missingSkills,
+                round(
+                    100.0 * size(matchingSkills) / size(requiredSkills)
+                ) AS matchPercentage
+            ORDER BY matchPercentage DESC
             `,
             {
                 developerId: developerId
@@ -303,12 +338,12 @@ ORDER BY matchPercentage DESC
 
         });
 
-        res.json({
+        res.json(toNativeTypes({
             success: true,
             developerId: developerId,
             count: recommendations.length,
             recommendations: recommendations
-        });
+        }));
 
     } catch (error) {
 

@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-
+import ErrorBoundary from "./components/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
 import Developers from "./pages/Developers";
 import DeveloperDetails from "./pages/DeveloperDetails";
@@ -20,6 +20,7 @@ function App() {
 
             <Navbar />
 
+ <ErrorBoundary>
             <Routes>
 
                 <Route
@@ -43,7 +44,7 @@ function App() {
                 />
 
             </Routes>
-
+</ErrorBoundary>
         </BrowserRouter>
 
     );

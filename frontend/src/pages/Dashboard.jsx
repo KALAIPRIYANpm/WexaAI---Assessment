@@ -76,7 +76,7 @@ function Dashboard() {
 
         return (
             <Container sx={{ mt: 5 }}>
-                <Typography>
+                <Typography color="text.secondary">
                     Loading SkillGraph...
                 </Typography>
             </Container>
@@ -86,60 +86,47 @@ function Dashboard() {
 
     return (
 
-        <Container sx={{ mt: 5, mb: 5 }}>
+        <Container sx={{ mt: 6, mb: 6 }}>
 
-            <Typography
-                variant="h3"
-                fontWeight="bold"
-            >
-                SkillGraph Dashboard
-            </Typography>
+            {/* Hero */}
 
+            <Box sx={{ mb: 5 }}>
 
-            <Typography
-                color="text.secondary"
-                sx={{ mt: 1, mb: 4 }}
-            >
-                Explore developers, skills and
-                intelligent job recommendations.
-            </Typography>
+                <Typography
+                    variant="h3"
+                    sx={{
+                        background: "linear-gradient(90deg, #1B1F3B, #5B5FEF)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent"
+                    }}
+                >
+                    SkillGraph Dashboard
+                </Typography>
+
+                <Typography
+                    color="text.secondary"
+                    sx={{ mt: 1 }}
+                >
+                    Explore developers, skills and intelligent job recommendations.
+                </Typography>
+
+            </Box>
 
 
             {/* Statistics */}
 
-            <Grid
-                container
-                spacing={3}
-                sx={{ mb: 5 }}
-            >
+            <Grid container spacing={3} sx={{ mb: 6 }}>
 
-                <Grid item xs={12} sm={4}>
-
-                    <StatCard
-                        title="Developers"
-                        value={developers.length}
-                    />
-
+                <Grid size={{ xs: 12, sm: 4 }}>
+                    <StatCard title="Developers" value={developers.length} />
                 </Grid>
 
-
-                <Grid item xs={12} sm={4}>
-
-                    <StatCard
-                        title="Jobs"
-                        value={jobs.length}
-                    />
-
+                <Grid size={{ xs: 12, sm: 4 }}>
+                    <StatCard title="Jobs" value={jobs.length} />
                 </Grid>
 
-
-                <Grid item xs={12} sm={4}>
-
-                    <StatCard
-                        title="Skills"
-                        value="8"
-                    />
-
+                <Grid size={{ xs: 12, sm: 4 }}>
+                    <StatCard title="Skills" value="8" />
                 </Grid>
 
             </Grid>
@@ -147,79 +134,40 @@ function Dashboard() {
 
             {/* Developers */}
 
-            <Typography
-                variant="h4"
-                fontWeight="bold"
-                sx={{ mb: 3 }}
-            >
+            <Typography variant="h5" sx={{ mb: 3 }}>
                 Developers
             </Typography>
 
+            <Grid container spacing={3}>
 
-            <Grid
-                container
-                spacing={3}
-            >
+                {developers.map(developer => (
 
-                {developers.map(
-                    (developer) => (
+                    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={developer.id}>
+                        <DeveloperCard developer={developer} />
+                    </Grid>
 
-                        <Grid
-                            item
-                            xs={12}
-                            sm={6}
-                            md={4}
-                            key={developer.id}
-                        >
-
-                            <DeveloperCard
-                                developer={developer}
-                            />
-
-                        </Grid>
-
-                    )
-                )}
+                ))}
 
             </Grid>
 
 
             {/* Jobs */}
 
-            <Box sx={{ mt: 6 }}>
+            <Box sx={{ mt: 7 }}>
 
-                <Typography
-                    variant="h4"
-                    fontWeight="bold"
-                    sx={{ mb: 3 }}
-                >
+                <Typography variant="h5" sx={{ mb: 3 }}>
                     Available Jobs
                 </Typography>
 
+                <Grid container spacing={3}>
 
-                <Grid
-                    container
-                    spacing={3}
-                >
+                    {jobs.map(job => (
 
-                    {jobs.map(
-                        (job) => (
+                        <Grid size={{ xs: 12, md: 6 }} key={job.id}>
+                            <JobCard job={job} />
+                        </Grid>
 
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                key={job.id}
-                            >
-
-                                <JobCard
-                                    job={job}
-                                />
-
-                            </Grid>
-
-                        )
-                    )}
+                    ))}
 
                 </Grid>
 

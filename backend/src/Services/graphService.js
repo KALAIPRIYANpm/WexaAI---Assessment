@@ -1,4 +1,35 @@
+const neo4j = require("neo4j-driver");
 const driver = require("../db/neo4j");
+
+
+// ---------------------------------------
+// Helper: convert Neo4j Integer objects
+// ({low, high}) into plain JS numbers,
+// recursively, anywhere in an object/array
+// ---------------------------------------
+function toNativeTypes(value) {
+
+    if (neo4j.isInt(value)) {
+        return value.toNumber();
+    }
+
+    if (Array.isArray(value)) {
+        return value.map(toNativeTypes);
+    }
+
+    if (value !== null && typeof value === "object") {
+
+        const result = {};
+
+        for (const key in value) {
+            result[key] = toNativeTypes(value[key]);
+        }
+
+        return result;
+    }
+
+    return value;
+}
 
 
 // Get all developers
@@ -15,7 +46,7 @@ async function getAllDevelopers() {
         `);
 
         return result.records.map(record => {
-            return record.get("d").properties;
+            return toNativeTypes(record.get("d").properties);
         });
 
     } finally {
@@ -47,7 +78,9 @@ async function getDeveloperById(developerId) {
             return null;
         }
 
-        return result.records[0].get("d").properties;
+        return toNativeTypes(
+            result.records[0].get("d").properties
+        );
 
     } finally {
 
@@ -85,13 +118,13 @@ async function getDeveloperSkills(developerId) {
 
         const record = result.records[0];
 
-        return {
+        return toNativeTypes({
             developer: record.get("developer"),
 
             skills: record.get("skills").map(skill => {
                 return skill.properties;
             })
-        };
+        });
 
     } finally {
 
@@ -162,7 +195,7 @@ async function getJobRecommendations(developerId) {
 
         return result.records.map(record => {
 
-            return {
+            return toNativeTypes({
                 jobId: record.get("jobId"),
                 title: record.get("title"),
                 location: record.get("location"),
@@ -172,7 +205,7 @@ async function getJobRecommendations(developerId) {
                 requiredSkills: record.get("requiredSkills"),
                 missingSkills: record.get("missingSkills"),
                 matchPercentage: record.get("matchPercentage")
-            };
+            });
 
         });
 
@@ -182,6 +215,8 @@ async function getJobRecommendations(developerId) {
 
     }
 }
+
+
 // Get all jobs
 async function getAllJobs() {
 
@@ -204,10 +239,10 @@ async function getAllJobs() {
 
             const job = record.get("j").properties;
 
-            return {
+            return toNativeTypes({
                 ...job,
                 company: record.get("company")
-            };
+            });
 
         });
 
@@ -249,11 +284,11 @@ async function getJobById(jobId) {
 
         const record = result.records[0];
 
-        return {
+        return toNativeTypes({
             ...record.get("j").properties,
             company: record.get("company"),
             requiredSkills: record.get("requiredSkills")
-        };
+        });
 
     } finally {
 
@@ -261,6 +296,7 @@ async function getJobById(jobId) {
 
     }
 }
+
 
 // Get graph data for a developer
 async function getDeveloperGraph(developerId) {
@@ -326,10 +362,10 @@ async function getDeveloperGraph(developerId) {
 
             });
 
-        return {
+        return toNativeTypes({
             nodes,
             relationships
-        };
+        });
 
     } finally {
 
@@ -337,6 +373,7 @@ async function getDeveloperGraph(developerId) {
 
     }
 }
+
 
 module.exports = {
     getAllDevelopers,
