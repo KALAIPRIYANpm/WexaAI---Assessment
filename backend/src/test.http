@@ -1,0 +1,9 @@
+
+//
+# GET 
+
+//
+GET http://localhost:5000/api/jobs/recommendations/dev1
+//
+
+GET http://localhost:5000/api/developers/dev1/skills
