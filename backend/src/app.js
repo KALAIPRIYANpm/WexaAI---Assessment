@@ -4,6 +4,10 @@ require("dotenv").config();
 
 const driver = require("./db/neo4j");
 
+const developerRoutes = require("./routes/developerRoutes");
+const jobRoutes = require("./routes/jobRoutes");
+const graphRoutes = require("./routes/graphRoutes");
+
 const app = express();
 
 
@@ -12,16 +16,18 @@ app.use(cors());
 app.use(express.json());
 
 
-// Test API
+// Home
 app.get("/", (req, res) => {
+
     res.json({
         success: true,
         message: "SkillGraph API is running"
     });
+
 });
 
 
-// Test CognoDB connection
+// Test CognoDB
 app.get("/api/test-db", async (req, res) => {
 
     const session = driver.session();
@@ -43,8 +49,7 @@ app.get("/api/test-db", async (req, res) => {
 
         res.status(500).json({
             success: false,
-            message: "Could not connect to CognoDB",
-            error: error.message
+            message: "Could not connect to CognoDB"
         });
 
     } finally {
@@ -55,11 +60,23 @@ app.get("/api/test-db", async (req, res) => {
 });
 
 
+// API routes
+app.use("/api/developers", developerRoutes);
+
+app.use("/api/jobs", jobRoutes);
+
+app.use("/api/graph", graphRoutes);
+
+
 // Start server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`SkillGraph server running on port ${PORT}`);
+
+    console.log(
+        `SkillGraph server running on port ${PORT}`
+    );
+
 });
 
 // Get all developers
